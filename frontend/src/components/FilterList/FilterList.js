@@ -1,11 +1,11 @@
 import Filter from "../Filter/Filter";
 import "./FilterList.css";
 
-function FilterList({data}) {
+function FilterList({data, onChangeFilter }) {
   const trainIndexList = data.map(train => ({ label: train.train_index, value: train.train_index}));
   return (
     <ul className="filter-list">
-      <Filter name="Индекс поезда" options={trainIndexList}/>
+      <Filter name="Индекс поезда" options={trainIndexList} onChangeFilter={onChangeFilter} fieldName="trainIndex"/>
       <Filter name="Место отбытия" options={[
         { label: "Значение 1", value: "v1" },
         { label: "Значение 2", value: "v2" },
@@ -17,7 +17,7 @@ function FilterList({data}) {
         { label: "Значение 8", value: "v3" },
         { label: "Значение 9", value: "v4" },
         { label: "Значение 10", value: "v5" }
-      ]}/>
+      ]} fieldName="startStation" />
       <Filter name="Место прибытия" options={[
         { label: "Значение 1", value: "v1" },
         { label: "Значение 2", value: "v2" },
@@ -29,7 +29,7 @@ function FilterList({data}) {
         { label: "Значение 8", value: "v3" },
         { label: "Значение 9", value: "v4" },
         { label: "Значение 10", value: "v5" }
-      ]}/>
+      ]} fieldName="arrivalStation" />
       <Filter name="Номер вагона" options={[
         { label: "Значение 1", value: "v1" },
         { label: "Значение 2", value: "v2" },
@@ -41,7 +41,7 @@ function FilterList({data}) {
         { label: "Значение 8", value: "v3" },
         { label: "Значение 9", value: "v4" },
         { label: "Значение 10", value: "v5" }
-      ]}/>
+      ]} fieldName="wagonNumber"/>
     </ul>
   );
 }

@@ -4,7 +4,7 @@ import Counter from "../Counter/Counter";
 import FilterList from "../FilterList/FilterList";
 import "./Header.css";
 
-function Header({data}) {
+function Header({data, onChangeFilter }) {
     const [quantity, setQuantity] = useState([]);
     const handleWebSocketData = useCallback((data) => {
         setQuantity(data.trains_amount);
@@ -16,7 +16,7 @@ function Header({data}) {
     return (
         <header className="header">
             <Counter quantity={quantity} />
-            <FilterList data={data} />
+            <FilterList data={data} onChangeFilter={onChangeFilter}/>
             <button className="header__button" type="submit">Применить фильтры</button>
         </header>
     );
