@@ -2,12 +2,10 @@ import Railway from "../Railway/Railway";
 import {Marker, Popup} from "react-leaflet";
 import L from "leaflet";
 import React, {useState, useRef} from "react";
-import { useClickOutside } from "../../hooks/useClickOutside";
 
 const Train = ({ train, onClick, onOutsideClick }) => {
     const [isShowPath, setIsShowPath] = useState(false);
-    const ref = useRef();
-    useClickOutside([ref], onOutsideClick);
+    const ref = useRef(null);
     const handleClick = () => {
         setIsShowPath(!isShowPath);
         onClick(train);
@@ -15,7 +13,6 @@ const Train = ({ train, onClick, onOutsideClick }) => {
     return (
         <div>
             {isShowPath ? train.stations.map((station, index, array) => {
-                console.log("2", station);
                 return array[index + 1] ? (
                     <Railway
                         key={`${train.train_index} - ${station.station_id} - ${index}`}

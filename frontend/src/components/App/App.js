@@ -13,8 +13,6 @@ function App() {
     const [hexbin, setHexbin] = useState({});
     const [filters, setFilters] = useState(initialFilters);
 
-    console.log(filters);
-
     const handleChangeFilters = (fieldName, value) => {
         setFilters({...filters, [fieldName]: value });
     }

@@ -1,26 +1,21 @@
 import * as React from 'react';
 
-export const useClickOutside = (elements, handler) => {
-  const listener = React.useCallback(
-    (e) => {
-      if (
-        elements.every((element) => {
-          return element.current && !element.current.contains(e.target);
-        })
-      ) {
-        handler(e);
-      }
-    },
-    [handler, elements],
-  );
+export const useClickOutside = (callback) => {
+    const ref = React.useRef(null);
 
-  React.useEffect(() => {
-    document.addEventListener('mousedown', listener, true);
-    document.addEventListener('touchstart', listener);
-
-    return () => {
-      document.removeEventListener('mousedown', listener, true);
-      document.removeEventListener('touchstart', listener);
+    const handleClickOutside = (event) => {
+        if (ref.current && !ref.current.contains(event.target)) {
+            callback();
+        }
     };
-  }, [listener]);
+
+    React.useEffect(() => {
+        document.addEventListener('mousedown', handleClickOutside);
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [callback]);
+
+    return ref;
 };

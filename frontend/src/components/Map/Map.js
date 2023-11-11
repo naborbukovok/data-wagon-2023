@@ -86,7 +86,6 @@ function ReactControlExample({ data: trains, polygons, hexbin, handleTrainClick,
     const hexbinKey = useForceUpdateGeoJson(hexbin);
     const polygonsKey = useForceUpdateGeoJson(polygons);
     const setColor = ({ properties }) => {
-        console.log({properties});
         return { color: properties.color };
     };
 
