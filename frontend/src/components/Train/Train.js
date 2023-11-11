@@ -14,7 +14,7 @@ const Train = ({ train }) => {
                 console.log("2", station);
                 return array[index + 1] ? (
                     <Railway
-                        key={station.station_id}
+                        key={`${train.train_index} - ${station.station_id} - ${index}`}
                         citiesCoordinates={[[station.latitude, station.longitude], [array[index + 1].latitude, array[index + 1].longitude]]}
                     />
                 ) : null;

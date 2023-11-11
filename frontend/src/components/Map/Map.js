@@ -96,9 +96,9 @@ function ReactControlExample({ data: trains }) {
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
             <MinimapControl position="topright" />
-            {trains[0] ? trains[0].map((train) => {
+            {trains.map((train) => {
                 return <Train key={train.train_index} train={train} />
-            }) : null}
+            })}
         </MapContainer>
     );
 }
