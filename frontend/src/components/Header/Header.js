@@ -1,18 +1,9 @@
-import React, { useCallback, useState } from "react";
-import useWebSocket from "../../hooks/useWebSocket";
+import React from "react";
 import Counter from "../Counter/Counter";
 import FilterList from "../FilterList/FilterList";
 import "./Header.css";
 
-function Header({data, onChangeFilter }) {
-    const [quantity, setQuantity] = useState([]);
-    const handleWebSocketData = useCallback((data) => {
-        setQuantity(data.trains_amount);
-        console.log(data);
-    }, []);
-
-    useWebSocket(handleWebSocketData, 'ws://94.103.89.174:8000/trains/amount');
-
+function Header({data, onChangeFilter, quantity }) {
     return (
         <header className="header">
             <Counter quantity={quantity} />

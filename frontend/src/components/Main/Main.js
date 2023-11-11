@@ -5,7 +5,7 @@ import TrainRoute from "../TrainRoute/TrainRoute";
 import "./Main.css";
 import React, {useState} from "react";
 
-function Main({data}) {
+function Main({data, polygons, hexbin}) {
   const [routeData, setRouteData] = useState({});
 
   const handleTrainClick = (newRouteData) => {
@@ -19,11 +19,7 @@ function Main({data}) {
   console.log("MAIN", data);
   return (
     <main className="main">
-      <Map
-        data={data}
-        handleTrainClick={handleTrainClick}
-        handleMapClick={handleMapClick}
-      />
+      <Map data={data} polygons={polygons} hexbin={hexbin} handleTrainClick={handleTrainClick} handleMapClick={handleMapClick}/>
       <DataPopup
         position="left"
         isVisible={(Object.keys(routeData).length !== 0) ? true : false}

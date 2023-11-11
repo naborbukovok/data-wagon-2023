@@ -1,6 +1,7 @@
 // Classes used by Leaflet to position controls
 import React, { useCallback, useMemo, useState } from "react";
 import {
+<<<<<<< HEAD
   MapContainer,
   Rectangle,
   TileLayer,
@@ -8,12 +9,19 @@ import {
   Popup,
   useMap,
   useMapEvent
+=======
+    MapContainer,
+    Rectangle,
+    TileLayer,
+    useMap,
+    useMapEvent, GeoJSON,
+>>>>>>> 89883dc6c23e3916e6935e6242d304e9dadf6675
 } from "react-leaflet";
 import { useEventHandlers } from "@react-leaflet/core";
 import "leaflet/dist/leaflet.css";
 import "./Map.css";
 import Train from "../Train/Train";
-
+import useForceUpdateGeoJson from "./useForceUpdateGeoJson";
 const POSITION_CLASSES = {
   bottomleft: "leaflet-bottom leaflet-left",
   bottomright: "leaflet-bottom leaflet-right",
@@ -83,34 +91,34 @@ function MinimapControl({ position, zoom }) {
   );
 }
 
-function ReactControlExample({
-  data: trains,
-  handleTrainClick,
-  handleMapClick,
-}) {
-  return (
-    <MapContainer
-      style={{ height: "100vh", zIndex: 1 }}
-      center={[55.8304, 49.0661]}
-      zoom={5}
-      scrollWheelZoom={false}
-    >
-      <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
-      <MinimapControl position="topright" />
-      {trains.map((train) => {
-        return (
-          <Train
-            key={train.train_index}
-            train={train}
-            onClick={handleTrainClick}
-          />
-        );
-      })}
-    </MapContainer>
-  );
+function ReactControlExample({ data: trains, polygons, hexbin, handleTrainClick, handleMapClick, }) {
+    const hexbinKey = useForceUpdateGeoJson(hexbin);
+    const polygonsKey = useForceUpdateGeoJson(polygons);
+    const setColor = ({ properties }) => {
+        console.log({properties});
+        return { color: properties.color };
+    };
+
+
+    return (
+        <MapContainer
+            style={{ height: "100vh", zIndex: 1 }}
+            center={[55.8304, 49.0661]}
+            zoom={5}
+            scrollWheelZoom={false}
+        >
+            {Object.keys(polygons).length ? <GeoJSON key={`polygon-${polygonsKey}`} attribution="&copy; credits due..." data={polygons} style={setColor} /> : null}
+            {Object.keys(hexbin).length ? <GeoJSON key={`hexbin-${hexbinKey}`} attribution="&copy; credits due..." data={hexbin} style={setColor} /> : null}
+            <TileLayer
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
+            <MinimapControl position="topright" />
+            {trains.map((train) => {
+                return <Train key={train.train_index} train={train} onClick={handleTrainClick} />
+            })}
+        </MapContainer>
+    );
 }
 
 export default ReactControlExample;
