@@ -1,5 +1,5 @@
 // Classes used by Leaflet to position controls
-import { useCallback, useMemo, useState } from "react";
+import {useCallback, useMemo, useState} from "react";
 import L from 'leaflet'; // Add this line to import the 'L' object
 import {
     MapContainer,
@@ -7,15 +7,12 @@ import {
     TileLayer,
     Marker,
     Popup,
-    Polyline,
     useMap,
     useMapEvent,
 } from "react-leaflet";
 import { useEventHandlers } from "@react-leaflet/core";
 import "leaflet/dist/leaflet.css";
 import "./Map.css";
-import WebSocketComponent from "./websocket";
-import {TRAINS} from "./mock";
 
 const POSITION_CLASSES = {
     bottomleft: "leaflet-bottom leaflet-left",
@@ -86,36 +83,7 @@ function MinimapControl({ position, zoom }) {
     );
 }
 
-// Coordinates for the cities
-const citiesCoordinates = {
-    Uralsk: [51.1645, 53.1681],
-    Samara: [53.1959, 50.1002],
-    Kazan: [55.8304, 49.0661],
-    NaberezhnyeChelny: [55.7437, 52.3956],
-};
-
-function ReactControlExample() {
-    const [trains, setTrains] = useState(TRAINS);
-
-    // Callback function to handle data received from WebSocket
-    const handleWebSocketData = (data) => {
-        // Update the state with the received data
-        setTrains((prevTrains) => {
-            // Find the index of the train in the existing state
-            const trainIndex = prevTrains.findIndex((train) => train.train_index === data.train_index);
-
-            if (trainIndex !== -1) {
-                // If the train exists, update its information
-                prevTrains[trainIndex] = data;
-                return [...prevTrains];
-            } else {
-                // If the train is new, add it to the state
-                return [...prevTrains, data];
-            }
-        });
-    };
-
-    console.log(trains);
+function ReactControlExample({ data: trains }) {
     return (
         <MapContainer
             style={{ height: "100vh", zIndex: 1 }}
@@ -128,26 +96,6 @@ function ReactControlExample() {
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
             <MinimapControl position="topright" />
-            <WebSocketComponent onDataReceived={handleWebSocketData} />
-
-
-            {/* Render railway lines between cities */}
-            <Polyline
-                positions={[citiesCoordinates.Uralsk, citiesCoordinates.Samara]}
-                color="orange"
-                dashArray="10, 10" // Use a dash pattern for a dotted line effect
-            />
-            <Polyline
-                positions={[citiesCoordinates.Samara, citiesCoordinates.Kazan]}
-                color="orange"
-                dashArray="10, 10"
-            />
-            <Polyline
-                positions={[citiesCoordinates.Kazan, citiesCoordinates.NaberezhnyeChelny]}
-                color="orange"
-                dashArray="10, 10"
-            />
-
             {trains.map((train) => (
                 <Marker
                     key={train.train_index}
