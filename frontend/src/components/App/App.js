@@ -10,6 +10,7 @@ function App() {
     const [data, setData] = useState([]);
     const [quantity, setQuantity] = useState([]);
     const [polygons, setPolygons] = useState({});
+    const [hexbin, setHexbin] = useState({});
     const [filters, setFilters] = useState(initialFilters);
 
     console.log(filters);
@@ -45,12 +46,18 @@ function App() {
         setPolygons(data.polygons);
     }, []);
 
+    const handleHexbin = useCallback((data) => {
+        console.log(data);
+        setHexbin(data);
+    }, []);
+
     useWebSocket(handleAmount, 'ws://94.103.89.174:8000/trains/amount');
     useWebSocket(handleWebSocketData, 'ws://94.103.89.174:8000/trains/test');
+    useWebSocket(handleHexbin, 'ws://94.103.89.174:8000/trains/hexbin');
   return (
     <div className="app">
       <Header data={trains} quantity={quantity} onChangeFilter={handleChangeFilters} />
-      <Main data={filteredTrains} polygons={polygons} />
+      <Main data={filteredTrains} polygons={polygons} hexbin={hexbin} />
     </div>
   );
 }

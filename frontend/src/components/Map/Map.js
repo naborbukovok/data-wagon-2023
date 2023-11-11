@@ -11,6 +11,7 @@ import { useEventHandlers } from "@react-leaflet/core";
 import "leaflet/dist/leaflet.css";
 import "./Map.css";
 import Train from "../Train/Train";
+import useForceUpdateGeoJson from "./useForceUpdateGeoJson";
 const POSITION_CLASSES = {
     bottomleft: "leaflet-bottom leaflet-left",
     bottomright: "leaflet-bottom leaflet-right",
@@ -80,10 +81,15 @@ function MinimapControl({ position, zoom }) {
     );
 }
 
-function ReactControlExample({ data: trains, polygons }) {
+function ReactControlExample({ data: trains, polygons, hexbin }) {
+    const hexbinKey = useForceUpdateGeoJson(hexbin);
+    const polygonsKey = useForceUpdateGeoJson(polygons);
     const setColor = ({ properties }) => {
-        return { ...properties};
+        console.log({properties});
+        return { color: properties.color };
     };
+
+
     return (
         <MapContainer
             style={{ height: "100vh", zIndex: 1 }}
@@ -91,7 +97,8 @@ function ReactControlExample({ data: trains, polygons }) {
             zoom={5}
             scrollWheelZoom={false}
         >
-            {Object.keys(polygons).length ? <GeoJSON attribution="&copy; credits due..." data={polygons} style={setColor} /> : null}
+            {Object.keys(polygons).length ? <GeoJSON key={`polygon-${polygonsKey}`} attribution="&copy; credits due..." data={polygons} style={setColor} /> : null}
+            {Object.keys(hexbin).length ? <GeoJSON key={`hexbin-${hexbinKey}`} attribution="&copy; credits due..." data={hexbin} style={setColor} /> : null}
             <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
