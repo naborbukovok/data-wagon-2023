@@ -88,7 +88,7 @@ function ReactControlExample({ data: trains }) {
         <MapContainer
             style={{ height: "100vh", zIndex: 1 }}
             center={[55.8304, 49.0661]}
-            zoom={8}
+            zoom={5}
             scrollWheelZoom={false}
         >
             <TileLayer
@@ -97,7 +97,7 @@ function ReactControlExample({ data: trains }) {
             />
             <MinimapControl position="topright" />
             {trains[0] ? trains[0].map((train) => {
-                return <Train train={train} />
+                return <Train key={train.train_index} train={train} />
             }) : null}
         </MapContainer>
     );

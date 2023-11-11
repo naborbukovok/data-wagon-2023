@@ -1,12 +1,16 @@
 import Railway from "../Railway/Railway";
 import {Marker, Popup} from "react-leaflet";
 import L from "leaflet";
-import React from "react";
+import React, {useState} from "react";
 
 const Train = ({ train }) => {
+    const [isShowPath, setIsShowPath] = useState(false);
+    const handleClick = () => {
+        setIsShowPath(!isShowPath);
+    }
     return (
         <div>
-            {train.stations.map((station, index, array) => {
+            {isShowPath ? train.stations.map((station, index, array) => {
                 console.log("2", station);
                 return array[index + 1] ? (
                     <Railway
@@ -15,14 +19,16 @@ const Train = ({ train }) => {
                     />
                 ) : null;
                 }
-            )}
+            ) : null}
             <Marker
-                key={train.train_index}
                 position={[train.latitude, train.longitude]}
                 icon={L.divIcon({
                     className: 'custom-marker',
                     html: `<div class="marker-content">${train.train_index}</div>`
                 })}
+                eventHandlers={{
+                    click: handleClick,
+                }}
             >
                 <Popup>
                     <div>
