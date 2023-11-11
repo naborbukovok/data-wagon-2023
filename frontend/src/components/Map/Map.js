@@ -1,6 +1,5 @@
 // Classes used by Leaflet to position controls
-import {useCallback, useMemo, useState} from "react";
-import L from 'leaflet'; // Add this line to import the 'L' object
+import React, {useCallback, useMemo, useState} from "react";
 import {
     MapContainer,
     Rectangle,
@@ -13,6 +12,7 @@ import {
 import { useEventHandlers } from "@react-leaflet/core";
 import "leaflet/dist/leaflet.css";
 import "./Map.css";
+import Train from "../Train/Train";
 
 const POSITION_CLASSES = {
     bottomleft: "leaflet-bottom leaflet-left",
@@ -87,7 +87,7 @@ function ReactControlExample({ data: trains }) {
     return (
         <MapContainer
             style={{ height: "100vh", zIndex: 1 }}
-            center={[55.7558, 37.6176]}
+            center={[55.8304, 49.0661]}
             zoom={5}
             scrollWheelZoom={false}
         >
@@ -96,24 +96,9 @@ function ReactControlExample({ data: trains }) {
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
             <MinimapControl position="topright" />
-            {trains.map((train) => (
-                <Marker
-                    key={train.train_index}
-                    position={[train.latitude, train.longitude]}
-                    icon={L.divIcon({
-                        className: 'custom-marker',
-                        html: `<div class="marker-content">${train.train_index}</div>`
-                    })}
-                >
-                    <Popup>
-                        <div>
-                            <h3>Train {train.train_index}</h3>
-                            <p>Current Station: {train.current_station_id}</p>
-                            <p>Current Time: {train.current_time}</p>
-                        </div>
-                    </Popup>
-                </Marker>
-            ))}
+            {trains.map((train) => {
+                return <Train key={train.train_index} train={train} />
+            })}
         </MapContainer>
     );
 }

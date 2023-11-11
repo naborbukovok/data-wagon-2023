@@ -3,8 +3,13 @@ import { MultiSelect } from "react-multi-select-component";
 import "./Filter.css";
 
 function Filter(props) {
-  const { name, options } = props;
+  const { name, options, onChangeFilter, fieldName } = props;
   const [selected, setSelected] = useState([]);
+
+  const handleChange = (values) => {
+      setSelected(values);
+      onChangeFilter(fieldName, values.map(item => item.value));
+  }
 
   const customValueRenderer = (selected, _options) => {
     return selected.length
@@ -20,7 +25,7 @@ function Filter(props) {
           className="filter-multiselect"
           options={options}
           value={selected}
-          onChange={setSelected}
+          onChange={handleChange}
           labelledBy={"Select"}
           isCreatable={true}
           overrideStrings={{
