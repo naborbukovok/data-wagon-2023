@@ -2,3 +2,23 @@
   height: 100px;
   width: 100vw;
 }
+
+/* Add this CSS to your stylesheet or component */
+
+.custom-marker {
+  background-color: #007bff; /* Blue marker background color */
+  border-radius: 50%;
+  color: #fff; /* Text color */
+  text-align: center;
+  font-weight: bold;
+  padding: 6px;
+  cursor: pointer;
+}
+
+.custom-marker:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+.marker-content {
+  font-size: 14px;
+}
