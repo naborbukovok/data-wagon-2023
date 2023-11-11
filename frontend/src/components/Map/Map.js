@@ -1,21 +1,12 @@
 // Classes used by Leaflet to position controls
 import React, { useCallback, useMemo, useState } from "react";
 import {
-<<<<<<< HEAD
-  MapContainer,
-  Rectangle,
-  TileLayer,
-  Marker,
-  Popup,
-  useMap,
-  useMapEvent
-=======
     MapContainer,
     Rectangle,
     TileLayer,
     useMap,
-    useMapEvent, GeoJSON,
->>>>>>> 89883dc6c23e3916e6935e6242d304e9dadf6675
+    useMapEvent, 
+    GeoJSON
 } from "react-leaflet";
 import { useEventHandlers } from "@react-leaflet/core";
 import "leaflet/dist/leaflet.css";
