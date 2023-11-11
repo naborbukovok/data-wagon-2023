@@ -3,10 +3,11 @@ import {Marker, Popup} from "react-leaflet";
 import L from "leaflet";
 import React, {useState} from "react";
 
-const Train = ({ train }) => {
+const Train = ({ train, onClick }) => {
     const [isShowPath, setIsShowPath] = useState(false);
     const handleClick = () => {
         setIsShowPath(!isShowPath);
+        onClick(train);
     }
     return (
         <div>
