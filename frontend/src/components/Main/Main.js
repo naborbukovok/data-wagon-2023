@@ -24,7 +24,7 @@ function Main() {
   }, []);
 
   
-  useWebSocket(handleWebSocketData);
+  useWebSocket(handleWebSocketData, 'ws://94.103.89.174:8000/trains/test');
 
   console.log("MAIN", data);
   return (

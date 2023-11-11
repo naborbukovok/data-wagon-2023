@@ -1,9 +1,9 @@
 import {useEffect} from "react";
 
-const useWebSocket = (onWebSocketData) => {
+const useWebSocket = (onWebSocketData, url) => {
     useEffect(() => {
         // Connect to WebSocket
-        const socket = new WebSocket('ws://94.103.89.174:8000/trains/test');
+        const socket = new WebSocket(url);
 
         // Event listener for when the connection is opened
         socket.addEventListener('open', (event) => {
