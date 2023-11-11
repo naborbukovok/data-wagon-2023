@@ -106,7 +106,7 @@ function ReactControlExample({ data: trains, polygons, hexbin, handleTrainClick,
             />
             <MinimapControl position="topright" />
             {trains.map((train) => {
-                return <Train key={train.train_index} train={train} onClick={handleTrainClick} />
+                return <Train key={train.train_index} train={train} onClick={handleTrainClick} onOutsideClick={handleMapClick} />
             })}
         </MapContainer>
     );

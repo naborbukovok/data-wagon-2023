@@ -1,10 +1,13 @@
 import Railway from "../Railway/Railway";
 import {Marker, Popup} from "react-leaflet";
 import L from "leaflet";
-import React, {useState} from "react";
+import React, {useState, useRef} from "react";
+import { useClickOutside } from "../../hooks/useClickOutside";
 
-const Train = ({ train, onClick }) => {
+const Train = ({ train, onClick, onOutsideClick }) => {
     const [isShowPath, setIsShowPath] = useState(false);
+    const ref = useRef();
+    useClickOutside([ref], onOutsideClick);
     const handleClick = () => {
         setIsShowPath(!isShowPath);
         onClick(train);
@@ -21,24 +24,26 @@ const Train = ({ train, onClick }) => {
                 ) : null;
                 }
             ) : null}
-            <Marker
-                position={[train.latitude, train.longitude]}
-                icon={L.divIcon({
-                    className: 'custom-marker',
-                    html: `<div class="marker-content">${train.train_index}</div>`
-                })}
-                eventHandlers={{
-                    click: handleClick,
-                }}
-            >
-                <Popup>
-                    <div>
-                        <h3>Train {train.train_index}</h3>
-                        <p>Current Station: {train.current_station_id}</p>
-                        <p>Current Time: {train.current_time}</p>
-                    </div>
-                </Popup>
-            </Marker>
+            <div ref={ref}>
+                <Marker
+                    position={[train.latitude, train.longitude]}
+                    icon={L.divIcon({
+                        className: 'custom-marker',
+                        html: `<div class="marker-content">${train.train_index}</div>`
+                    })}
+                    eventHandlers={{
+                        click: handleClick,
+                    }}
+                >
+                    <Popup>
+                        <div>
+                            <h3>Train {train.train_index}</h3>
+                            <p>Current Station: {train.current_station_id}</p>
+                            <p>Current Time: {train.current_time}</p>
+                        </div>
+                    </Popup>
+                </Marker>
+            </div>
         </div>
     )
 }
