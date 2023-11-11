@@ -4,16 +4,13 @@ import {
     MapContainer,
     Rectangle,
     TileLayer,
-    Marker,
-    Popup,
     useMap,
-    useMapEvent,
+    useMapEvent, GeoJSON,
 } from "react-leaflet";
 import { useEventHandlers } from "@react-leaflet/core";
 import "leaflet/dist/leaflet.css";
 import "./Map.css";
 import Train from "../Train/Train";
-
 const POSITION_CLASSES = {
     bottomleft: "leaflet-bottom leaflet-left",
     bottomright: "leaflet-bottom leaflet-right",
@@ -83,7 +80,10 @@ function MinimapControl({ position, zoom }) {
     );
 }
 
-function ReactControlExample({ data: trains }) {
+function ReactControlExample({ data: trains, polygons }) {
+    const setColor = ({ properties }) => {
+        return { ...properties};
+    };
     return (
         <MapContainer
             style={{ height: "100vh", zIndex: 1 }}
@@ -91,6 +91,7 @@ function ReactControlExample({ data: trains }) {
             zoom={5}
             scrollWheelZoom={false}
         >
+            {Object.keys(polygons).length ? <GeoJSON attribution="&copy; credits due..." data={polygons} style={setColor} /> : null}
             <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

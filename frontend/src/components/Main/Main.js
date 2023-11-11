@@ -5,13 +5,11 @@ import TrainRoute from "../TrainRoute/TrainRoute";
 import "./Main.css";
 import React from "react";
 
-function Main({data}) {
-
-
+function Main({data, polygons}) {
   console.log("MAIN", data);
   return (
     <main className="main">
-      <Map data={data} />
+      <Map data={data} polygons={polygons} />
       <DataPopup position="left" markup={<TrainRoute />} />
       <DataPopup position="right" markup={<TrainCarriages />} />
     </main>
