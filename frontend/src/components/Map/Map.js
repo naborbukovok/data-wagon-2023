@@ -87,8 +87,8 @@ function ReactControlExample({ data: trains }) {
     return (
         <MapContainer
             style={{ height: "100vh", zIndex: 1 }}
-            center={[55.7558, 37.6176]}
-            zoom={5}
+            center={[55.8304, 49.0661]}
+            zoom={8}
             scrollWheelZoom={false}
         >
             <TileLayer
