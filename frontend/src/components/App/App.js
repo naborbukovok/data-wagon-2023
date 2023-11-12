@@ -51,7 +51,7 @@ function App() {
 
     useWebSocket(handleAmount, 'ws://94.103.89.174:8000/trains/amount');
     useWebSocket(handleWebSocketData, 'ws://94.103.89.174:8000/trains/test');
-    useWebSocket(handleHexbin, 'ws://94.103.89.174:8000/trains/hexbin');
+    useWebSocket(handleHexbin, 'ws://94.103.89.174:8000/layers/hexbin');
   return (
     <div className="app">
       <Header data={trains} quantity={quantity} onChangeFilter={handleChangeFilters} />
