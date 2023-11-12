@@ -13,6 +13,9 @@ import "leaflet/dist/leaflet.css";
 import "./Map.css";
 import Train from "../Train/Train";
 import useForceUpdateGeoJson from "./useForceUpdateGeoJson";
+import hexButton from "../../images/hb.svg";
+import polygonButton from "../../images/polygons.svg";
+
 const POSITION_CLASSES = {
   bottomleft: "leaflet-bottom leaflet-left",
   bottomright: "leaflet-bottom leaflet-right",
@@ -85,29 +88,48 @@ function MinimapControl({ position, zoom }) {
 function ReactControlExample({ data: trains, polygons, hexbin, handleTrainClick, handleMapClick, }) {
     const hexbinKey = useForceUpdateGeoJson(hexbin);
     const polygonsKey = useForceUpdateGeoJson(polygons);
+    const [isOpenHex, setIsOpenHex] = useState(false);
+    const [isOpenPolygon, setIsOpenPolygon] = useState(true);
+
+    const handleToggleHex = () => {
+        setIsOpenHex(!isOpenHex);
+    }
+
+    const handleTogglePolygon = () => {
+        setIsOpenPolygon(!isOpenPolygon);
+    }
     const setColor = ({ properties }) => {
         return { color: properties.color };
     };
 
 
     return (
-        <MapContainer
-            style={{ height: "100vh", zIndex: 1 }}
-            center={[55.8304, 49.0661]}
-            zoom={5}
-            scrollWheelZoom={false}
-        >
-            {Object.keys(polygons).length ? <GeoJSON key={`polygon-${polygonsKey}`} attribution="&copy; credits due..." data={polygons} style={setColor} /> : null}
-            {Object.keys(hexbin).length ? <GeoJSON key={`hexbin-${hexbinKey}`} attribution="&copy; credits due..." data={hexbin} style={setColor} /> : null}
-            <TileLayer
-                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
-            <MinimapControl position="topright" />
-            {trains.map((train) => {
-                return <Train key={train.train_index} train={train} onClick={handleTrainClick} onOutsideClick={handleMapClick} />
-            })}
-        </MapContainer>
+        <>
+            <MapContainer
+                style={{ height: "100vh", zIndex: 1 }}
+                center={[55.8304, 49.0661]}
+                zoom={5}
+                scrollWheelZoom={false}
+            >
+                {Object.keys(polygons).length && isOpenPolygon ? <GeoJSON key={`polygon-${polygonsKey}`} attribution="&copy; credits due..." data={polygons} style={setColor} /> : null}
+                {Object.keys(hexbin).length && isOpenHex ? <GeoJSON key={`hexbin-${hexbinKey}`} attribution="&copy; credits due..." data={hexbin} style={setColor} /> : null}
+                <TileLayer
+                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                />
+                <MinimapControl position="topright" />
+                {trains.map((train) => {
+                    return <Train key={train.train_index} train={train} onClick={handleTrainClick} onOutsideClick={handleMapClick} />
+                })}
+            </MapContainer>
+            <div className="svg_containerHex" onClick={handleToggleHex}>
+                <img className="map_hexButton" src={hexButton} alt="кнопка" />
+            </div>
+            <div className="svg_containerPolygon" onClick={handleTogglePolygon}>
+            <img className="map_polygonButton" src={polygonButton} alt="кнопка" />
+            </div>
+        </>
+
     );
 }
 

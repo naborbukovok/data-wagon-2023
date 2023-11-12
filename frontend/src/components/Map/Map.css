@@ -22,3 +22,41 @@
 .marker-content {
   font-size: 14px;
 }
+
+.svg_containerHex {
+  display: flex;
+  z-index: 100;
+  width: 36px;
+  height: 36px;
+  background: rgba(255, 255, 255, 1);
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  right: 50%;
+}
+
+.svg_containerPolygon {
+  display: flex;
+  z-index: 100;
+  width: 36px;
+  height: 36px;
+  background: rgba(255, 255, 255, 1);
+  position: absolute;
+  bottom: 0;
+  left: 53%;
+  right: 50%;
+}
+
+/*.map_polygonButton {*/
+/*  position: absolute;*/
+/*  bottom: 0;*/
+/*  left: 50%;*/
+/*  right: 50%;*/
+/*}*/
+
+/*.map_hexButton {*/
+/*  position: absolute;*/
+/*  bottom: 0;*/
+/*  left: 50%;*/
+/*  right: 50%;*/
+/*}*/
