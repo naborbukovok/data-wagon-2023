@@ -99,23 +99,22 @@ function ReactControlExample({ data: trains, polygons, hexbin, handleTrainClick,
         setIsOpenPolygon(!isOpenPolygon);
     }
     const setColor = ({ properties }) => {
-        return { color: properties.color };
+        return { ...properties, color: properties.color };
     };
-
 
     return (
         <>
             <MapContainer
                 style={{ height: "100vh", zIndex: 1 }}
                 center={[55.8304, 49.0661]}
-                zoom={5}
+                zoom={8}
                 scrollWheelZoom={false}
             >
                 {Object.keys(polygons).length && isOpenPolygon ? <GeoJSON key={`polygon-${polygonsKey}`} attribution="&copy; credits due..." data={polygons} style={setColor} /> : null}
                 {Object.keys(hexbin).length && isOpenHex ? <GeoJSON key={`hexbin-${hexbinKey}`} attribution="&copy; credits due..." data={hexbin} style={setColor} /> : null}
                 <TileLayer
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"
                 />
                 <MinimapControl position="topright" />
                 {trains.map((train) => {
@@ -126,7 +125,7 @@ function ReactControlExample({ data: trains, polygons, hexbin, handleTrainClick,
                 <img className="map_hexButton" src={hexButton} alt="кнопка" />
             </div>
             <div className="svg_containerPolygon" onClick={handleTogglePolygon}>
-            <img className="map_polygonButton" src={polygonButton} alt="кнопка" />
+                <img className="map_polygonButton" src={polygonButton} alt="кнопка" />
             </div>
         </>
 

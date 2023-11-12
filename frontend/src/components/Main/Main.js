@@ -3,8 +3,9 @@ import Map from "../Map/Map";
 import TrainCarriages from "../TrainCarriages/TrainCarriages";
 import TrainRoute from "../TrainRoute/TrainRoute";
 import "./Main.css";
-import React, {useState} from "react";
+import React, {useMemo, useState} from "react";
 import {useClickOutside} from "../../hooks/useClickOutside";
+import {MainContext} from "./context";
 
 function Main({data, polygons, hexbin}) {
   const [train, setTrain] = useState({});
@@ -21,11 +22,15 @@ function Main({data, polygons, hexbin}) {
       setTrain(train);
   }
 
+  const contextValue = useMemo(() => ({ selectedTrain: train.train_index }), [train.train_index]);
+
 
 
   return (
     <main className="main">
+        <MainContext.Provider value={contextValue}>
       <Map data={data} polygons={polygons} hexbin={hexbin} handleTrainClick={handleTrainClick} handleMapClick={handleMapClick}/>
+        </MainContext.Provider>
         <div ref={ref}>
             <DataPopup
                 position="left"

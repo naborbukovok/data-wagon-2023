@@ -17,7 +17,7 @@ function App() {
         setFilters({...filters, [fieldName]: value });
     }
 
-    const handleWebSocketData = useCallback((data) => {
+    const handleTrains = useCallback((data) => {
         setData((prevTrains) => {
             const trainIndex = prevTrains.findIndex(
                 (train) => train.train_index === data.train_index
@@ -41,7 +41,6 @@ function App() {
 
     const handleAmount = useCallback((data) => {
         setQuantity(data.trains_amount);
-        setPolygons(data.polygons);
     }, []);
 
     const handleHexbin = useCallback((data) => {
@@ -49,9 +48,14 @@ function App() {
         setHexbin(data);
     }, []);
 
+    const handlePolygons = useCallback((data) => {
+        setPolygons(data);
+    }, []);
+
     useWebSocket(handleAmount, 'ws://94.103.89.174:8000/trains/amount');
-    useWebSocket(handleWebSocketData, 'ws://94.103.89.174:8000/trains/test');
+    useWebSocket(handleTrains, 'ws://94.103.89.174:8000/trains/test');
     useWebSocket(handleHexbin, 'ws://94.103.89.174:8000/layers/hexbin');
+    useWebSocket(handlePolygons, 'ws://94.103.89.174:8000/layers/federals');
   return (
     <div className="app">
       <Header data={trains} quantity={quantity} onChangeFilter={handleChangeFilters} />

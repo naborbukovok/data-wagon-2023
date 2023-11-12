@@ -14,7 +14,7 @@ const Railway = ({citiesCoordinates}) => {
     return (
         <Polyline
             positions={citiesCoordinates}
-            color="orange"
+            color={`rgba(235, 84, 37, 1)`}
             dashArray="10, 10" // Use a dash pattern for a dotted line effect
         />
 

@@ -1,9 +1,12 @@
 import Railway from "../Railway/Railway";
 import {Marker, Popup} from "react-leaflet";
 import L from "leaflet";
-import React, {useState, useRef} from "react";
+import classNames from "classnames";
+import React, {useState, useRef, useContext} from "react";
+import {MainContext} from "../Main/context";
 
-const Train = ({ train, onClick, onOutsideClick }) => {
+const Train = ({ train, onClick }) => {
+    const contextValue = useContext(MainContext);
     const [isShowPath, setIsShowPath] = useState(false);
     const ref = useRef(null);
     const handleClick = () => {
@@ -25,8 +28,8 @@ const Train = ({ train, onClick, onOutsideClick }) => {
                 <Marker
                     position={[train.latitude, train.longitude]}
                     icon={L.divIcon({
-                        className: 'custom-marker',
-                        html: `<div class="marker-content">${train.train_index}</div>`
+                        className: classNames('custom-marker', { 'selected-marker': contextValue.selectedTrain === train.train_index, }),
+                        // html: `<div class="marker-content">${train.train_index}</div>`
                     })}
                     eventHandlers={{
                         click: handleClick,
