@@ -1,5 +1,8 @@
 ## DataWagon 2023 dorateam
 Репозиторий проекта хакатона DataWagon 2023 от команды dorateam.
+  
+**Проект занял первое место в рамках Хакатона!**
+![image](imgs/win.png)
 
 ![image](imgs/main.jpeg)
 ### Рабочий прототип
